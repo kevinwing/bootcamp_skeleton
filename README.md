@@ -1,5 +1,10 @@
 # Bootcamp Skeleton Project
 
+#### Prerequisites:
+- python >= 3.10
+- pycomm3
+- git (for cloning this repo)
+
 #### Clone:
 `git clone --recursive https://github.com/kevinwing/bootcamp_skeleton.git`
 
