@@ -1,0 +1,3 @@
+[submodule "lib/fanuc_ethernet_ip_drivers"]
+	path = lib/fanuc_ethernet_ip_drivers
+	url = https://github.com/UofI-CDACS/fanuc_ethernet_ip_drivers.git
