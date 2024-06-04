@@ -7,11 +7,10 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 
 from robot_controller import robot
 
-ROBOT_IP = "129.101.81.215" # DJ
-# ROBOT_IP = "129.101.81.214" # BILL
+ROBOT_IP = '129.101.98.215' # DJ
+# ROBOT_IP = '129.101.98.214' # BILL
 
 def main():
-    robot_handle = robot(ROBOT_IP)
     pass
 
 if __name__ == "__main__":
