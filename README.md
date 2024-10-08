@@ -9,7 +9,7 @@
 git clone --recursive https://github.com/kevinwing/bootcamp_skeleton.git
 ```
 
-Enter project directory:
+#### Enter project directory:
 Linux/macOS:
 ```bash
 cd path/to/project
@@ -29,17 +29,17 @@ Windows:
 py -m venv .venv
 ```
 
-Activate python virtual environment (Linux/macOS):
+#### Activate python virtual environment:
+Linux/maxOS
 ```bash
 source ./venv/bin/activate
 ```
-On Windows:
+Windows:
 ```bash
 .\venv\Scripts\activate
 ```
 
 #### Install `pycomm3`:
-
 Linux/macOS:
 ```bash
 pip3 install pycomm3
