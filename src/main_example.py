@@ -1,6 +1,7 @@
 # main.py in the src/ directory
 import sys
 import os
+import pos_list
 
 # Add the path to the fanuc_ethernet_ip_drivers/src/ directory to the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib/fanuc_ethernet_ip_drivers/src')))
@@ -10,16 +11,16 @@ from robot_controller import robot
 ROBOT_IP = '129.101.98.215' # DJ
 # ROBOT_IP = '129.101.98.214' # BILL
 
-pos1 = [623.989258, 8.540856, 200.0, 179.9, 0.0, -60.0] # start position
-pos2 = [623.989258, 8.540856, 57.229496, 179.9, 0.0, -60.0] # pick position 1
-pos3 = [623.989258, 8.540856, 400.0, 179.9, 0.0, -60.0]
-pos4 = [745.704712, 632.666138, 400.0, 179.9, 0.0, -60.0]
-pos5 = [745.704712, 632.666138, 255.171265, 179.9, 0.0, -60.0] # pick position 2
-pos6 = [82.742859, 632.666138, 400.0, 179.9, 0.0, -60.0]
-pos7 = [82.742859, 632.666138, 255.171265, 179.9, 0.0, -60.0]
-pos8 = [620.989258, 5.540856, 200.0, 179.9, 0.0, 30.0] # start position rotated 90 degrees
-pos9 = [620.989258, 5.540856, 57.229496, 179.9, 0.0, 30.0] # end position rotated 90 degrees
-pos10 = [620.989258, 5.540856, 200.0, 179.9, 0.0, -60.0] # end position
+# pos1 = [623.989258, 8.540856, 200.0, 179.9, 0.0, -60.0] # start position
+# pos2 = [623.989258, 8.540856, 57.229496, 179.9, 0.0, -60.0] # pick position 1
+# pos3 = [623.989258, 8.540856, 400.0, 179.9, 0.0, -60.0]
+# pos4 = [745.704712, 632.666138, 400.0, 179.9, 0.0, -60.0]
+# pos5 = [745.704712, 632.666138, 255.171265, 179.9, 0.0, -60.0] # pick position 2
+# pos6 = [82.742859, 632.666138, 400.0, 179.9, 0.0, -60.0]
+# pos7 = [82.742859, 632.666138, 255.171265, 179.9, 0.0, -60.0]
+# pos8 = [620.989258, 5.540856, 200.0, 179.9, 0.0, 30.0] # start position rotated 90 degrees
+# pos9 = [620.989258, 5.540856, 57.229496, 179.9, 0.0, 30.0] # end position rotated 90 degrees
+# pos10 = [620.989258, 5.540856, 200.0, 179.9, 0.0, -60.0] # end position
 
 def main():
     robot_obj = robot(ROBOT_IP)

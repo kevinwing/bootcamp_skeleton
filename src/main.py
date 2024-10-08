@@ -1,6 +1,7 @@
 # main.py in the src/ directory
 import sys
 import os
+import pos_list
 
 # Add the path to the fanuc_ethernet_ip_drivers/src/ directory to the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib/fanuc_ethernet_ip_drivers/src')))
