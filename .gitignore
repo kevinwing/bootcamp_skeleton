@@ -1,3 +1,7 @@
 # python virtual environment exclude
 .venv/
 venv/
+
+# pycache
+__pycache__/
+src/__pycache__/
