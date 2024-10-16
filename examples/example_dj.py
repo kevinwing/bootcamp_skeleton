@@ -10,77 +10,79 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..',
 from robot_controller import robot
 
 ROBOT_IP = '129.101.98.215' # DJ
-# ROBOT_IP = '129.101.98.214' # BILL
-
-# pos1 = [623.989258, 8.540856, 200.0, 179.9, 0.0, -60.0] # start position
-# pos2 = [623.989258, 8.540856, 57.229496, 179.9, 0.0, -60.0] # pick position 1
-# pos3 = [623.989258, 8.540856, 400.0, 179.9, 0.0, -60.0]
-# pos4 = [745.704712, 632.666138, 400.0, 179.9, 0.0, -60.0]
-# pos5 = [745.704712, 632.666138, 255.171265, 179.9, 0.0, -60.0] # pick position 2
-# pos6 = [82.742859, 632.666138, 400.0, 179.9, 0.0, -60.0]
-# pos7 = [82.742859, 632.666138, 255.171265, 179.9, 0.0, -60.0]
-# pos8 = [620.989258, 5.540856, 200.0, 179.9, 0.0, 30.0] # start position rotated 90 degrees
-# pos9 = [620.989258, 5.540856, 57.229496, 179.9, 0.0, 30.0] # end position rotated 90 degrees
-# pos10 = [620.989258, 5.540856, 200.0, 179.9, 0.0, -60.0] # end position
 
 def main():
     robot_obj = robot(ROBOT_IP)
     robot_obj.set_speed(300)
     robot_obj.conveyor('stop')
-    robot_obj.schunk_gripper('open')
+    handle_pick_and_place(robot_obj, 'open')
     
-    # move robot to pos1
-    robot_obj.write_cartesian_position(pos_list.pos1)
+    # move robot to dj_pos1 - start
+    robot_obj.write_cartesian_position(pos_list.dj_pos1)
     
-    # move to pos2 - pick position 1
-    robot_obj.write_cartesian_position(pos_list.pos2)
+    # move to dj_pos2 - pick
+    robot_obj.write_cartesian_position(pos_list.dj_pos2)
 
+    # close gripper to grab die
     handle_pick_and_place(robot_obj, 'close')
     
-    robot_obj.write_cartesian_position(pos_list.pos1) # safe position
+    # move to dj_pos1 - position safety
+    robot_obj.write_cartesian_position(pos_list.dj_pos1)
     
-    robot_obj.write_cartesian_position(pos_list.pos3) # over belt
+    # move to dj_pos3
+    robot_obj.write_cartesian_position(pos_list.dj_pos3) # over belt
     
-    robot_obj.write_cartesian_position(pos_list.pos4) # place position
+    # move to dj_pos4 - place
+    robot_obj.write_cartesian_position(pos_list.dj_pos4) # place position
     
+    # open gripper to release die
     handle_pick_and_place(robot_obj, 'open') # release block
     
-    robot_obj.write_cartesian_position(pos_list.pos3) # return to above belt
+    # move to dj_pos3 - position safety
+    robot_obj.write_cartesian_position(pos_list.dj_pos3) # return to above belt
     
-    # reverse, forward, stop
-    # robot_obj.conveyor('forward')
+    # turn belt on going forward
     robot_obj.conveyor('forward')
-    
-    # robot_obj.write_cartesian_position(pos_list.pos6, False)
-    
+
+    # while sensor is false, run belt
     while robot_obj.conveyor_proximity_sensor('right') == 0:
         pass
     robot_obj.conveyor('stop')
 
+    # wait some time
     time.sleep(5)
     
+    # turn on belt, in reverse
     robot_obj.conveyor('reverse')
 
+    # while sensor is false, run belt
     while robot_obj.conveyor_proximity_sensor('left') == 0:
         pass
-
-    robot_obj.conveyor('stop')
+    robot_obj.conveyor('stop') # stop belt
     
-    robot_obj.write_cartesian_position(pos_list.pos5)
+    # move to dj_pos5
+    robot_obj.write_cartesian_position(pos_list.dj_pos5)
 
-    robot_obj.write_cartesian_position(pos_list.pos6)
+    # move to dj_pos6 - pick
+    robot_obj.write_cartesian_position(pos_list.dj_pos6)
 
+    # close gripper to grab die
     handle_pick_and_place(robot_obj, 'close')
     
-    robot_obj.write_cartesian_position(pos_list.pos7)
+    # move to dj_pos7
+    robot_obj.write_cartesian_position(pos_list.dj_pos7)
     
-    robot_obj.write_cartesian_position(pos_list.pos1)
+    # move to dj_pos1
+    robot_obj.write_cartesian_position(pos_list.dj_pos1)
     
-    robot_obj.write_cartesian_position(pos_list.pos8)
+    # move to dj_pos8 - place
+    robot_obj.write_cartesian_position(pos_list.dj_pos8)
     
+    # open gripper to release die
     handle_pick_and_place(robot_obj, 'open')
     
-    robot_obj.write_cartesian_position(pos_list.pos9)
+    # move to dj_pos9 - end
+    robot_obj.write_cartesian_position(pos_list.dj_pos9)
 
 
 def handle_pick_and_place(rb: robot, action: str):
@@ -88,7 +90,6 @@ def handle_pick_and_place(rb: robot, action: str):
         rb.schunk_gripper('open')
     else:
         rb.schunk_gripper('close')
-    # rb.start_robot()
     time.sleep(.5)
     
 
