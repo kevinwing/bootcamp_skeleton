@@ -2,6 +2,7 @@
 import sys
 import os
 import pos_list
+import time
 
 # Add the path to the fanuc_ethernet_ip_drivers/src/ directory to the system path
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'lib/fanuc_ethernet_ip_drivers/src')))
@@ -24,48 +25,62 @@ ROBOT_IP = '129.101.98.215' # DJ
 
 def main():
     robot_obj = robot(ROBOT_IP)
-    robot_obj.set_speed(100)
+    robot_obj.set_speed(300)
+    robot_obj.conveyor('stop')
+    robot_obj.schunk_gripper('open')
     
     # move robot to pos1
-    robot_obj.write_cartesian_position(pos1)
+    robot_obj.write_cartesian_position(pos_list.pos1)
     
     # move to pos2 - pick position 1
-    robot_obj.write_cartesian_position(pos2)
+    robot_obj.write_cartesian_position(pos_list.pos2)
 
     handle_pick_and_place(robot_obj, 'close')
     
-    robot_obj.write_cartesian_position(pos3) # safe position
+    robot_obj.write_cartesian_position(pos_list.pos1) # safe position
     
-    robot_obj.write_cartesian_position(pos4) # over belt
+    robot_obj.write_cartesian_position(pos_list.pos3) # over belt
     
-    robot_obj.write_cartesian_position(pos5) # place position
+    robot_obj.write_cartesian_position(pos_list.pos4) # place position
     
     handle_pick_and_place(robot_obj, 'open') # release block
     
-    robot_obj.write_cartesian_position(pos4) # return to above belt
+    robot_obj.write_cartesian_position(pos_list.pos3) # return to above belt
     
     # reverse, forward, stop
+    # robot_obj.conveyor('forward')
     robot_obj.conveyor('forward')
     
-    robot_obj.write_cartesian_position(pos6, False)
+    # robot_obj.write_cartesian_position(pos_list.pos6, False)
     
-    while robot_obj.conveyor_proximity_sensor('left') == 0:
+    while robot_obj.conveyor_proximity_sensor('right') == 0:
         pass
     robot_obj.conveyor('stop')
+
+    time.sleep(5)
     
-    robot_obj.write_cartesian_position(pos7)
+    robot_obj.conveyor('reverse')
+
+    while robot_obj.conveyor_proximity_sensor('left') == 0:
+        pass
+
+    robot_obj.conveyor('stop')
     
+    robot_obj.write_cartesian_position(pos_list.pos5)
+
+    robot_obj.write_cartesian_position(pos_list.pos6)
+
     handle_pick_and_place(robot_obj, 'close')
     
-    robot_obj.write_cartesian_position(pos6)
+    robot_obj.write_cartesian_position(pos_list.pos7)
     
-    robot_obj.write_cartesian_position(pos8)
+    robot_obj.write_cartesian_position(pos_list.pos1)
     
-    robot_obj.write_cartesian_position(pos9)
+    robot_obj.write_cartesian_position(pos_list.pos8)
     
     handle_pick_and_place(robot_obj, 'open')
     
-    robot_obj.write_cartesian_position(pos10)
+    robot_obj.write_cartesian_position(pos_list.pos9)
 
 
 def handle_pick_and_place(rb: robot, action: str):
